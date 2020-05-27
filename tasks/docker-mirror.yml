@@ -1,0 +1,7 @@
+- name: Setup docker mirrors in China.
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "registry-mirrors": ["http://hub-mirror.c.163.com"]
+      }
