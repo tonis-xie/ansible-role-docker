@@ -11,8 +11,6 @@
     state: "{{ docker_package_state }}"
   notify: restart docker
 
-- include_tasks: docker-mirror.yml
-
 - name: Ensure Docker is started and enabled at boot.
   service:
     name: docker
@@ -21,6 +19,13 @@
 
 - name: Ensure handlers are notified now to avoid firewall conflicts.
   meta: flush_handlers
+
+- include_tasks: docker-mirror.yml
+
+- name: Restart docker after setup mirror
+  service:
+    name: docker
+    state: restarted
 
 - include_tasks: docker-compose.yml
   when: docker_install_compose | bool
